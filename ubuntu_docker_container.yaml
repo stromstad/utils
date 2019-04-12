@@ -1,0 +1,19 @@
+#docker stack deploy -c .\ubuntu_docker_container.yaml <instance-name>
+#docker run --rm -v "C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL:/var/opt/src" -v "test_mssql:/var/opt/trgt" -it ubuntu bash
+
+version: "3"
+services:
+  ubuntu: 
+    image: ubuntu
+    command: bash
+    ports:
+      - "22:22"
+    volumes:
+      - "mssql_volume:/var/opt/trgt"
+      - C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL:/var/opt/src
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+volumes:
+  mssql_volume:
+    external: true
