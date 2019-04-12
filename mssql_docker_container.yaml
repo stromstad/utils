@@ -1,3 +1,5 @@
+#docker stack deploy -c .\mssql_docker_container.yaml <instance-name>
+
 version: "3"
 services:
   db: 
@@ -10,13 +12,14 @@ services:
       - MSSQL_PID=Express
     restart: unless-stopped
     ports:
-      - "1402:1433"
+      - "1404:1433"
     volumes:
-      - "mssql_volume:/var/opt/mssql"
+      - "test_mssql:/var/opt/mssql"
     deploy:
       placement:
         constraints: [node.role == manager]
 volumes:
-  mssql_volume:
+  test_mssql:
+    external: true
 networks:
   mssql_network:
